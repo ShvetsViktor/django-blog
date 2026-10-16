@@ -1,6 +1,4 @@
-{% extends "base.html" %} {% block content %}
-
-<!-- index.html content starts here -->
+{% extends "base.html" %} {% load static %} {% block content %}
 <div class="container-fluid">
   <div class="row">
     <!-- Blog Entries Column -->
@@ -11,6 +9,11 @@
           <div class="card mb-4">
             <div class="card-body">
               <div class="image-container">
+                {% if "placeholder" in post.featured_image.url %}
+                <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image" />
+                {% else %}
+                <img class="card-img-top" src=" {{ post.featured_image.url }}" alt="{{ post.title }}" />
+                {% endif %}
                 <div class="image-flash">
                   <p class="author">Author: {{ post.author }}</p>
                 </div>
@@ -42,6 +45,4 @@
   </nav>
   {% endif %}
 </div>
-
-<!-- index.html content ends here -->
 {% endblock %} {% block copyright %} Copyright 2023 Viktor Shvets {% endblock %}
