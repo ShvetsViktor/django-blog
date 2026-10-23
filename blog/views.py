@@ -65,4 +65,3 @@ def profile_page(request):
     user = get_object_or_404(User, user=request.user)
     # Retrieve all comments for the user object
     comments = user.commenter.all()
-
