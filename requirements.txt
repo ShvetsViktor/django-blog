@@ -4,12 +4,14 @@ certifi==2026.7.22
 cffi==2.1.1
 charset-normalizer==3.5.2
 cloudinary==1.36.0
+crispy-bootstrap5==0.7
 cryptography==50.0.2
 defusedxml==0.7.1
 dj-database-url==0.5.0
 dj3-cloudinary-storage==0.0.6
-Django==4.2.30
+Django==6.1.2
 django-allauth==0.57.2
+django-crispy-forms==2.7
 django-summernote==0.8.20.0
 gunicorn==23.0.0
 idna==3.20
