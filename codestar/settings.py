@@ -16,7 +16,7 @@ import dj_database_url
 if os.path.isfile('env.py'):
     import env
 
-DEBUG = True
+DEBUG = False
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
