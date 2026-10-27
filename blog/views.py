@@ -8,6 +8,13 @@ from .forms import CommentForm
 
 
 class PostList(generic.ListView):
+    """
+    Displays a paginated list of published :model:`blog.Post` entries.
+
+    **Template:**
+
+    :template:`blog/index.html`
+    """
     queryset = Post.objects.filter(status=1)
     template_name = "blog/index.html"
     paginate_by = 6
@@ -15,12 +22,19 @@ class PostList(generic.ListView):
 
 def post_detail(request, slug):
     """
-    Display an individual :model:`blog.Post`.
+    Displays an individual published :model:`blog.Post`
+    and allows users to submit comments.
 
     **Context**
 
     ``post``
         An instance of :model:`blog.Post`.
+    ``comments``
+        Comments related to :model:`blog.Post`.
+    ``comment_count``
+        The number of approved comments.
+    ``comment_form``
+        An instance of :form:`blog.CommentForm`.
 
     **Template:**
 
@@ -33,7 +47,6 @@ def post_detail(request, slug):
     comment_count = post.comments.filter(approved=True).count()
 
     if request.method == "POST":
-        print("Received a POST request")
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
             comment = comment_form.save(commit=False)
@@ -46,8 +59,6 @@ def post_detail(request, slug):
             )
 
     comment_form = CommentForm()
-
-    print("About to render template")
 
     return render(
         request,
@@ -63,7 +74,19 @@ def post_detail(request, slug):
 
 def comment_edit(request, slug, comment_id):
     """
-    view to edit comments
+    Updates an instance of :model:`blog.Comment`
+    if the requesting user is its author.
+
+    **Context**
+
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        An instance of :model:`blog.Comment`.
+    ``comment_form``
+        An instance of :form:`blog.CommentForm`.
+
+    Redirects to the corresponding post detail page.
     """
     if request.method == "POST":
 
@@ -87,7 +110,17 @@ def comment_edit(request, slug, comment_id):
 
 def comment_delete(request, slug, comment_id):
     """
-    view to delete comment
+    Deletes an instance of :model:`blog.Comment`
+    if the requesting user is its author.
+
+    **Context**
+
+    ``post``
+        An instance of :model:`blog.Post`.
+    ``comment``
+        An instance of :model:`blog.Comment`.
+
+    Redirects to the corresponding post detail page.
     """
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)

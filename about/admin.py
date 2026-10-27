@@ -5,6 +5,10 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(About)
 class AboutAdmin(SummernoteModelAdmin):
+    """
+    Configures the admin interface for :model:`about.About`
+    with Summernote rich-text editing.
+    """
     summernote_fields = ('content',)
 
 # Note: admin.ModelAdmin is the standard way of registering
@@ -17,5 +21,8 @@ class AboutAdmin(SummernoteModelAdmin):
 
 @admin.register(CollaborateRequest)
 class CollaborateRequestAdmin(admin.ModelAdmin):
-
+    """
+    Configures the admin interface for
+    :model:`about.CollaborateRequest`.
+    """
     list_display = ('message', 'read',)
